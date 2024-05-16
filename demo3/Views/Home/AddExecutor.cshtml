@@ -1,0 +1,41 @@
+﻿@model demo3.Models.Executor
+
+@{
+
+    bool check = false;
+    ViewData["Title"] = "Добавление исполнителя";
+
+}
+
+    <h1>Добавление исполнителя</h1>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post" asp-action="AddExecutor">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                <input asp-for="IdApplication" class="form-control" value="@ViewBag.IdApplication" hidden />
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdExecutor" class="control-label"></label>
+                    <select asp-for="IdExecutor" class="form-control" asp-items="@ViewBag.Executors"></select>
+                </div>
+               
+                <div class="form-group">
+                    <input type="submit" value="Добавить" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

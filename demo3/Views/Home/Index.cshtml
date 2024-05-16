@@ -1,0 +1,135 @@
+﻿@model IEnumerable<demo3.Models.Application>
+
+@{
+    ViewData["Title"] = "Заявки";
+    List<Executor> executors = ViewBag.Executors;
+}
+
+<h1>Заявки</h1>
+            <form method="post" asp-action="Index">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label class="control-label">Поиск</label>
+                    <input name="search" class="form-control" placeholder="" />
+                </div>
+                    <div class="form-group">
+                        <input type="submit" value="Искать" class="btn btn-primary" />
+                    </div>
+             </form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Номер заявки
+            </th>
+            <th>
+              Описание
+            </th>
+            <th>
+                Этап выполнения
+            </th>
+            <th>
+                Статус заказа
+            </th>
+            <th>
+                ФИО заказчика
+            </th>
+            <th>
+                Цена заявки
+            </th>
+            <th>
+                Комментарий исполнителя
+            </th>
+            <th>
+                Дата добавления заявки
+            </th>
+            <th>
+                Дата выполнения заявки
+            </th>
+            <th>
+                Время выполнения заявки
+            </th>
+            <th>
+                Оборудование
+            </th>
+            <th>
+                Тип неисправности
+            </th>
+            <th>
+                Исполнители
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdApplication)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhaseComplete)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StatusApplication)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PriceApplication)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CommentExecutor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateAddApplication)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateEndApplication)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeComplete)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdEquipmentNavigation.EquipmentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdTypeMalfunctionNavigation.TypeMalfunctionName)
+                </td>
+                <td>
+                    @foreach (var i in executors)
+                    {
+                        if (item.IdApplication == i.IdApplication)
+                        {
+                            @i.IdUserNavigation.FullName;
+                        }
+                    }
+                </td>
+                @if(UserCheck.User.IdRole == 0)
+                {
+                    <td>
+                        <a asp-action="AddApplication" asp-route-id="@item.IdApplication">Редактировать заявку</a> |
+                        <a asp-action="AddExecutor" asp-route-id="@item.IdApplication">Добавить исполнителя</a>
+                    </td>
+                }
+                else if (UserCheck.User.IdRole == 1)
+                {
+                    <td>
+                        <a asp-route-id="@item.IdApplication">Добавить комментарий</a>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <a asp-action="AddExecutor" asp-route-id="@item.IdApplication">Добавить исполнителя</a>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

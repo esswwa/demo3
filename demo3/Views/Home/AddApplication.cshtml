@@ -1,0 +1,119 @@
+﻿@model demo3.Models.Application
+
+@{
+
+    Application applic = new Application();
+    bool check = false;
+    ViewData["Title"] = "Добавление заявки";
+    if (ViewBag.Application != null)
+    {
+        check = true;
+        applic = ViewBag.Application;
+        ViewData["Title"] = "Редактирование заявки";
+    }
+
+}
+@if (check == true)
+{
+    <h1>Редактирование заявки</h1>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post" asp-action="EditApplication">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="IdApplication" class="control-label"></label>
+                    <input asp-for="IdApplication" class="form-control" value="@applic.IdApplication" />
+                    <span asp-validation-for="IdApplication" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" class="form-control" value="@applic.Description" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PhaseComplete" class="control-label"></label>
+                    <input asp-for="PhaseComplete" class="form-control" value="@applic.PhaseComplete" />
+                    <span asp-validation-for="PhaseComplete" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdTypeMalfunction" class="control-label"></label>
+                    <select asp-for="IdTypeMalfunction" class="form-control" asp-items="@ViewBag.TypeMalfunction"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdEquipment" class="control-label"></label>
+                    <select asp-for="IdEquipment" class="form-control" asp-items="@ViewBag.Equipment"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FullName" class="control-label"></label>
+                    <input asp-for="FullName" class="form-control" value="@applic.FullName" />
+                    <span asp-validation-for="FullName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PriceApplication" class="control-label"></label>
+                    <input asp-for="PriceApplication" class="form-control" value="@applic.PriceApplication" />
+                    <span asp-validation-for="PriceApplication" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Редактировать" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+}
+else
+{
+    <h1>Создание заявки</h1>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post" asp-action="AddApplication">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="IdApplication" class="control-label"></label>
+                    <input asp-for="IdApplication" class="form-control"/>
+                    <span asp-validation-for="IdApplication" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PhaseComplete" class="control-label"></label>
+                    <input asp-for="PhaseComplete" class="form-control" />
+                    <span asp-validation-for="PhaseComplete" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdTypeMalfunction" class="control-label"></label>
+                    <select asp-for="IdTypeMalfunction" class="form-control" asp-items="ViewBag.TypeMalfunction"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdEquipment" class="control-label"></label>
+                    <select asp-for="IdEquipment" class="form-control" asp-items="ViewBag.Equipment"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FullName" class="control-label"></label>
+                    <input asp-for="FullName" class="form-control" />
+                    <span asp-validation-for="FullName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PriceApplication" class="control-label"></label>
+                    <input asp-for="PriceApplication" class="form-control" />
+                    <span asp-validation-for="PriceApplication" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Создать заявку" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+}
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
